@@ -6,38 +6,41 @@ public class OnDateEntered implements ActionListener{
 	public void actionPerformed(ActionEvent evt){
 		String date = GUIMain.tfMain.getText();
 		GUIMain.tfMain.setText("");
-		String[] ddmmyy = date.trim().split("[/ -.+]");
+		String[] ddmmyy = date.trim().split("[/ -.+]+");
 		boolean isleap = false;
-		try{
-
+		try {
 			for (int i =0;i<3;i++){
 				String a = ddmmyy[i];
 			}
-		}catch(NullPointerException nPE){
+		}catch(Exception nPE){
 			GUIMain.taresult.setText("Invalid Date!");
 			System.out.println(nPE.toString());
 		}
 		int yr = Integer.parseInt(ddmmyy[2]);
-		int dt = Integer.parseInt(ddmmyy[0]);
 		int mt = Integer.parseInt(ddmmyy[1]);
-		isleap = ((yr%4==0&&yr%100!=0)|| yr%400 == 0);
+		int dt = Integer.parseInt(ddmmyy[0]);
+		isleap = ((yr % 4 == 0 && yr % 100 != 0) || yr % 400 == 0);
 		int[] nod = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 		if(isleap) nod[2] = 29;
-		if( (mt > 12 ) || (dt > nod[mt] ) ||  (yr<1900&&yr>99) || ( yr >= 2020) ){ // who the fuck hardcoded the current year in? Oh yeah, it was me
+		if( (mt > 12 ) || (dt > nod[mt] ) ||  (yr<1900&&yr>99)){ 
 			GUIMain.taresult.setText("Invalid Date!");
+			return;
 		}
 		if(yr<99){
-			if(yr<=25){
+			if(yr<=32){
 				yr+=100;
 			}
 			yr = 1900+yr;
-
 			System.out.println("Year auto corrected to " + yr);
 		}
-		GUIMain.taresult.setText("Your Zodiac Sign is : " + getzod(dt,mt));
 		Calendar current = Calendar.getInstance();
 		Calendar dob = Calendar.getInstance();
 		dob.set(yr, mt-1, dt);
+		if(dob.after(current)){
+			GUIMain.taresult.setText("Invalid Date!");
+			return;
+		}
+		GUIMain.taresult.setText("Your Zodiac Sign is : " + getzod(dt,mt));
 		System.out.println(current.getTime());
 		System.out.println("\n"+dob.getTime());
 		long daysOld = ChronoUnit.DAYS.between(dob.toInstant(), current.toInstant());

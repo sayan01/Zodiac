@@ -1,9 +1,6 @@
-// package gui;
 import java.awt.*;
 import javax.swing.*;
-public class GUIMain extends JFrame
-{
-
+public class GUIMain extends JFrame {
 	static Panel pnMain;
 	static Label lblMain;
 	static Panel pnDOB;
@@ -11,21 +8,18 @@ public class GUIMain extends JFrame
 	static TextField tfMain;
 	static JTextArea taresult;
 	static Panel pnres;
-
-
 	private static final long serialVersionUID = 1L;
-	public GUIMain()
-	{
+	public GUIMain() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLayout(new FlowLayout());
-		setTitle("Main Frame");
+		setTitle("Zodiac");
 		setSize(300,300);
 		pnMain = new Panel();
 		pnDOB = new Panel();
 		lblMain = new Label ("          Welcome        ",Label.CENTER);
 		pnMain.add(lblMain);
 
-		lblDOB = new Label ("Enter DOB: (separate by / )");
+		lblDOB = new Label ("Enter DOB:");
 		pnDOB.add(lblDOB);
 
 		tfMain = new TextField(10);
@@ -41,23 +35,10 @@ public class GUIMain extends JFrame
 		add(pnDOB);
 		add (pnres);
 
-
 		tfMain.addActionListener(new OnDateEntered());
-
 		setVisible(true);
-
 	}
-	public static void main(String [] args)
-	{
+	public static void main(String [] args) {
 		new GUIMain();
-
 	}
-
-
-
-
-
-
-
-
 }
